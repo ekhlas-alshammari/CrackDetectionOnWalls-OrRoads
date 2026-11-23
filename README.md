@@ -13,6 +13,7 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 
 ## Results
 - Training/validation curves, the before-vs-after training evaluation table (`loss`, `accuracy`, `precision`, `recall`, `F1`), and the confusion matrix will be generated and saved inside `project.ipynb`.
+- ![Training and Evaluation Dashboard](dashboard.png)
 
 ## How to run
 Open `project.ipynb` in Colab, set the runtime to GPU, run all.
