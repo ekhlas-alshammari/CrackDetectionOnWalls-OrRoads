@@ -57,6 +57,6 @@ The full dataset and generated intermediate run artifacts are kept outside the r
 - Real-world walls and roads captured under harsh lighting, strong shadows, glare, or motion blur may behave differently than cropped surface images.
 
 ## Training-program attribution
-This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space.
+This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space as a 3-day program. Session: November 2026.
 
-Training-program reference: SDAIA Academy on GitHub.
+Training-program reference: [SDAIA Academy on GitHub](https://github.com/SDAIAAcademy).
