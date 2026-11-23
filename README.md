@@ -19,7 +19,7 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 ### Before vs. After Training (Test Set — 450 Images)
 | Metric | Before Training | After Training |
 | :--- | :---: | :---: |
-| **Loss** | `0.7143` | `0.0004` |
+| **Loss** | `0.7143` | `0.0003` |
 | **Accuracy** | `53.56%` (`0.5356`) | `100.00%` (`1.0000`) |
 | **Precision** | `0.5356` | `1.0000` |
 | **Recall** | `1.0000` | `1.0000` |
