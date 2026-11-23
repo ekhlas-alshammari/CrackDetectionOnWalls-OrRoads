@@ -1,22 +1,21 @@
 # CrackDetectionOnWalls-OrRoads
 
 ## Project
-This project classifies surface cracks (`crack` vs. `no crack`) on walls and roads from images to help building and road maintenance inspectors spot potential surface damage more quickly.
-
-- **Developer:** Ekhlas Alshammari
-- **Project Type:** Individual capstone project
-- **Domain:** Surface crack classification on walls and roads (`crack` / `no crack`)
-- **Model:** Fine-tuned `ResNet-18` (PyTorch)
+This project classifies wall and road surface images into `crack` (`Positive`) and `no crack` (`Negative`) using transfer learning with `ResNet-18` in PyTorch to help building and road maintenance inspectors spot potential surface damage more quickly.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ekhlas-alshammari/CrackDetectionOnWalls-OrRoads/blob/main/project.ipynb)
 
-## Final Analysis
+## Dataset
+- **Kaggle Link:** https://www.kaggle.com/datasets/arunrk7/surface-crack-detection
+- **Classes:** Binary classification (`Negative` / no crack vs. `Positive` / crack).
+- **Number of Images & Split:** `3,000` balanced images (`1,500` per class) split into `2,100` train (`70%`), `450` validation (`15%`), and `450` test (`15%`) images. The test set is kept untouched until evaluation, and the dataset is downloaded inside `project.ipynb` rather than committed to the repository.
+- **Sample Images:** A sample image grid (`2x4`) is generated directly in `project.ipynb`, alongside visual summaries in `final_analysis.png`.
 
-### Model & Training Setup
-- **Architecture:** Pretrained `ResNet-18` fine-tuned for binary surface crack classification (`Negative` = No Crack, `Positive` = Crack) using `CrossEntropyLoss` and `Adam` (`lr = 1e-4`) over `4` epochs on a Colab T4 GPU.
-- **Data Split:** Balanced subset of `3,000` images from `arunrk7/surface-crack-detection` (`2,100` train, `450` validation, `450` test).
+## Model
+- **Architecture:** Pretrained `ResNet-18` with a replaced binary classification head in PyTorch.
+- **Training Settings:** `4` epochs, `Adam` optimizer (`lr = 1e-4`), `batch_size = 32`, and `CrossEntropyLoss` on Colab GPU (`T4`).
+- **Before vs. After Training (Test Set — 450 Images):**
 
-### Before vs. After Training (Test Set — 450 Images)
 | Metric | Before Training | After Training |
 | :--- | :---: | :---: |
 | **Loss** | `0.7143` | `0.0004` |
@@ -25,36 +24,17 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 | **Recall** | `1.0000` | `1.0000` |
 | **F1-Score** | `0.6975` | `1.0000` |
 
-![Final Analysis](final_analysis.png)
-
-### Key Takeaways & Limitations
-- **Performance Gain:** Before fine-tuning, the newly replaced classification head produced near-chance accuracy (`53.56%`). After `4` epochs, test accuracy reached `100.00%` (`209` true `Negative` and `241` true `Positive` predictions with zero misclassifications on the test split).
-- **Scope & Real-World Caveat:** This pipeline performs **image-level classification** (`crack` vs. `no crack`) rather than pixel/box localization (`object detection`). Real-world walls and roads under harsh lighting, shadows, or severe motion blur may behave differently than curated dataset crops.
+Before training, the untrained classification head performed near chance (`53.56%` accuracy on the test set). After `4` epochs of fine-tuning, test accuracy reached `100.00%` (`209` true negatives and `241` true positives) because the model weights adapted to the crack and non-crack patterns in this dataset. Keep in mind that this is image-level classification on surface crops and may behave differently on wide field photos with heavy shadows, glare, or motion blur.
 
 ## Results
-Training and validation curves, the before-vs-after training evaluation summary, and the confusion matrix on the test set are presented in the dashboard below and generated in `project.ipynb`.
+Training and validation loss/accuracy curves per epoch, the test confusion matrix, and before/after evaluation summaries are generated in `project.ipynb` and shown below. The curves show rapid early convergence and steady performance across the `4` epochs without clear overfitting.
 
 ![Training and Evaluation Dashboard](dashboard.png)
 
+![Final Analysis](final_analysis.png)
+
 ## How to run
-1. Open `project.ipynb` in Google Colab using the **Open In Colab** badge above.
-2. Set the runtime to **GPU** (`Runtime` -> `Change runtime type` -> `T4 GPU`).
-3. Run all cells in order to reproduce the training, evaluation metrics, and saved visual figures.
-
-## Dataset and model
-- **Dataset:** `arunrk7/surface-crack-detection` (Kaggle surface crack classification dataset: `Negative` / `No Crack` vs. `Positive` / `Crack`)
-- **Dataset split:** `3,000` balanced images (`2,100` train, `450` validation, `450` test)
-- **Model:** Fine-tuned `ResNet-18` (PyTorch) with a binary classification head
-- **Training setup:** `4` epochs, `CrossEntropyLoss`, and `Adam` (`lr = 1e-4`)
-- **Training hardware:** Google Colab (`T4 GPU`)
-
-The full dataset and generated intermediate run artifacts are kept outside the repository structure; the complete workflow, evaluation metrics, and visual reports are documented in `project.ipynb`.
-
-## Interpretation and limitations
-- Model predictions indicate whether a surface image is classified as `Positive` (`Crack`) or `Negative` (`No Crack`), and do not serve as a formal structural safety inspection.
-- Achieving `100.00%` accuracy on the `450`-image test split reflects performance on this curated dataset split and does not guarantee identical results on unseen field images.
-- This pipeline performs image-level classification rather than pixel-level crack segmentation or bounding-box localization.
-- Real-world walls and roads captured under harsh lighting, strong shadows, glare, or motion blur may behave differently than cropped surface images.
+Open `project.ipynb` in Colab, set the runtime to GPU, run all.
 
 ## Training-program attribution
 This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space as a 3-day program. Session: November 2026.
