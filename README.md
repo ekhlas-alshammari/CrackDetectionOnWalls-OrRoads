@@ -25,6 +25,9 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 | **Recall** | `1.0000` | `1.0000` |
 | **F1-Score** | `0.6975` | `1.0000` |
 
+
+![Final Analysis](final_analysis.png)
+
 ### Key Takeaways & Limitations
 - **Performance Gain:** Before fine-tuning, the newly replaced classification head produced near-chance accuracy (`53.56%`). After `4` epochs, test accuracy reached `100.00%` (`209` true `Negative` and `241` true `Positive` predictions with zero misclassifications on the test split).
 - **Scope & Real-World Caveat:** This pipeline performs **image-level classification** (`crack` vs. `no crack`) rather than pixel/box localization (`object detection`). Real-world walls and roads under harsh lighting, shadows, or severe motion blur may behave differently than curated dataset crops.
