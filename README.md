@@ -3,8 +3,8 @@
 ## Project
 This project classifies surface cracks (`crack` vs. `no crack`) on walls and roads from images to help building and road maintenance inspectors spot potential surface damage more quickly.
 
-- **Developer:** Ekhlas Alshammari
-- **Project Type:** Individual capstone project
+- **Developer:** Ekhlas Alshammari, Roa Alnazawi
+- **Project Type:** Team capstone project
 - **Domain:** Surface crack classification on walls and roads (`crack` / `no crack`)
 - **Model:** Fine-tuned `ResNet-18` (PyTorch)
 
