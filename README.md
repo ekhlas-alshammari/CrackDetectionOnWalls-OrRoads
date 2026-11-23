@@ -56,5 +56,7 @@ The full dataset and generated intermediate run artifacts are kept outside the r
 - This pipeline performs image-level classification rather than pixel-level crack segmentation or bounding-box localization.
 - Real-world walls and roads captured under harsh lighting, strong shadows, glare, or motion blur may behave differently than cropped surface images.
 
-## Program context
-This project was developed as an individual computer vision capstone project for surface crack classification on walls and roads using `project.ipynb` in Google Colab.
+## Training-program attribution
+This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space.
+
+Training-program reference: SDAIA Academy on GitHub.
