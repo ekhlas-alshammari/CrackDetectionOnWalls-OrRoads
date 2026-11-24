@@ -1,64 +1,23 @@
-# CrackDetectionOnWalls-OrRoads
+# Surface Crack Classification — ResNet-18 Pipeline
 
-## Project
-This project classifies surface cracks (`crack` vs. `no crack`) on walls and roads from images to help building and road maintenance inspectors spot potential surface damage more quickly.
+## Overview
+An end-to-end reproducible PyTorch pipeline for binary classification of surface cracks (`Negative` vs. `Positive`) using **ResNet-18** pretrained on ImageNet (`224x224` resolution with standard ImageNet normalization). The workflow evaluates the model **before and after fine-tuning** on a fixed, untouched test split using consistent evaluation logic and reproducible random seeds (`SEED = 42`).
 
-- **Developers:** Ekhlas Alshammari, Roa Alnazawi
-- **Project Type:** Team capstone project
-- **Domain:** Surface crack classification on walls and roads (`crack` / `no crack`)
-- **Model:** Fine-tuned `ResNet-18` (PyTorch)
-  
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ekhlas-alshammari/CrackDetectionOnWalls-OrRoads/blob/main/project.ipynb)
+## Dataset & Sampling
+* **Source:** `arunrk7/surface-crack-detection` (Kaggle), loaded via `kagglehub` (full dataset size: `40,000` images).
+* **Balanced Subset:** Randomly sampled `3,000` images (`1,500` per class: `0` = `Negative`, `1` = `Positive`).
+* **Duplicate Filtering:** Uses SHA-256 content hashing during selection to skip exact file duplicates (`10` exact duplicates skipped in this run), with a cross-split exact duplicate check and a note that visually similar images may still appear across splits.
+* **Data Splits:** Stratified split into:
+  * **Train:** `2,100` images (`70%` — `1,050` per class)
+  * **Validation:** `450` images (`15%` — `225` per class)
+  * **Test:** `450` images (`15%` — `225` per class)
 
-## Final Analysis
+## Key Contributions & Methodology
+* **Reproducibility:** Fixes Python, NumPy, and PyTorch (`CPU`/`CUDA` `T4` GPU) seeds along with deterministic cuDNN flags.
+* **Balanced & Deduplicated Selection:** Ensures equal class representation and prevents exact content duplication.
+* **Stratified Splitting & Integrity Checks:** Preserves class ratios across train, validation, and test sets while verifying split consistency.
+* **Pre/Post Fine-Tuning Comparison:** Evaluates a pretrained ResNet-18 backbone with a newly initialized classification head before and after fine-tuning (`BATCH_SIZE = 32`, `EPOCHS = 4`, `LEARNING_RATE = 1e-4`), tracking learning curves, test-set metrics (accuracy, precision, recall, F1-score), and confusion matrices.
 
-### Model & Training Setup
-- **Architecture:** Pretrained `ResNet-18` fine-tuned for binary surface crack classification (`Negative` = No Crack, `Positive` = Crack) using `CrossEntropyLoss` and `Adam` (`lr = 1e-4`), `batch_size = 32`, over `4` epochs on a Colab T4 GPU (`SEED = 42` with deterministic CUDA settings).
-- **Data Sampling & Deduplication:** From the full dataset of `40,000` images in `arunrk7/surface-crack-detection` (https://www.kaggle.com/datasets/arunrk7/surface-crack-detection), a balanced subset of `3,000` unique images (`1,500` `Negative` and `1,500` `Positive`) is randomly sampled using `SEED = 42` while skipping exact file duplicates via SHA-256 content hashing (`10` exact duplicates skipped during sampling).
-- **Data Split:** The `3,000` selected images are split into `2,100` train (`70%`; `1,050` per class), `450` validation (`15%`; `225` per class), and `450` test (`15%`; `225` per class), accompanied by exact cross-split duplicate verification and a sample image grid (`2x4`) generated in `project.ipynb`.
-
-### Before vs. After Training (Test Set — 450 Images)
-| Metric | Before Training | After Training |
-| :--- | :---: | :---: |
-| **Loss** | `0.7143` | `0.0003` |
-| **Accuracy** | `53.56%` (`0.5356`) | `100.00%` (`1.0000`) |
-| **Precision** | `0.5356` | `1.0000` |
-| **Recall** | `1.0000` | `1.0000` |
-| **F1-Score** | `0.6975` | `1.0000` |
-
-![Final Analysis](final_analysis.png)
-
-### Key Takeaways & Limitations
-- **Summary of Change:** Before training, the untrained classification head achieved near-chance accuracy (`53.56%`). After `4` epochs of fine-tuning `ResNet-18` on `2,100` training images (`450` validation), test accuracy on the `450` test images reached `100.00%` (`0.0004` loss; `209` true negatives and `241` true positives) as the model weights adapted to surface crack patterns on this dataset.
-- **Scope & Real-World Caveat:** This pipeline performs **image-level classification** (`crack` vs. `no crack`) rather than pixel/box localization (`object detection`). While exact file duplicates are filtered using SHA-256 hashes, visually similar images may still appear across splits, and real-world walls and roads under harsh lighting, shadows, or severe motion blur may behave differently than curated dataset crops.
-
-## Results
-Training and validation loss/accuracy curves per epoch, the before-vs-after training evaluation summary, and the confusion matrix on the test set are presented in the dashboard below and generated in `project.ipynb`. The curves show rapid early convergence and steady performance across the `4` epochs without clear overfitting.
-
-![Training and Evaluation Dashboard](dashboard.png)
-
-## How to run
-1. Open `project.ipynb` in Google Colab using the **Open In Colab** badge above.
-2. Set the runtime to **GPU** (`Runtime` -> `Change runtime type` -> `T4 GPU`).
-3. Run all cells in order to reproduce the balanced SHA-256 deduplicated subset (`3,000` images), training, evaluation metrics, and saved visual figures.
-
-## Dataset and model
-- **Dataset:** `arunrk7/surface-crack-detection` — https://www.kaggle.com/datasets/arunrk7/surface-crack-detection (`40,000` total images; `Negative` / `No Crack` vs. `Positive` / `Crack`)
-- **Dataset split:** `3,000` balanced, SHA-256 deduplicated images (`2,100` train, `450` validation, `450` test)
-- **Model:** Fine-tuned `ResNet-18` (PyTorch) with a binary classification head
-- **Training setup:** `4` epochs, `batch_size = 32`, `CrossEntropyLoss`, `Adam` (`lr = 1e-4`), and `SEED = 42`
-- **Training hardware:** Google Colab (`T4 GPU`)
-
-The full dataset and generated intermediate run artifacts are kept outside the repository structure; the complete workflow, sampling/duplicate checks, evaluation metrics, and visual reports are documented in `project.ipynb`.
-
-## Interpretation and limitations
-- Model predictions indicate whether a surface image is classified as `Positive` (`Crack`) or `Negative` (`No Crack`), and do not serve as a formal structural safety inspection.
-- Achieving `100.00%` accuracy on the `450`-image test split reflects performance on this curated dataset split and does not guarantee identical results on unseen field images.
-- Exact SHA-256 hash checks prevent identical file duplicates, though visually similar images may still exist across splits.
-- This pipeline performs image-level classification rather than pixel-level crack segmentation or bounding-box localization.
-- Real-world walls and roads captured under harsh lighting, strong shadows, glare, or motion blur may behave differently than cropped surface images.
-
-## Training-program attribution
-This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space as a 3-day program. Session: November 2026.
-
-Training-program reference: [SDAIA Academy on GitHub](https://github.com/SDAIAAcademy).
+## Environment & Tools
+* **Runtime:** Python 3, Google Colab (`cuda` / NVIDIA `T4` GPU detected).
+* **Libraries:** `torch`, `torchvision`, `scikit-learn`, `numpy`, `pandas`, `matplotlib`, `kagglehub`.
