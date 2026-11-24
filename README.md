@@ -39,7 +39,7 @@ The training and validation loss and accuracy curves across the 4 epochs show st
 ![Final Analysis](final_analysis.png)
 
 ### Confusion Matrix & Summary of Change
-- **Test Set Confusion Matrix (After Training):** `TN = 225`, `FP = 0`, `FN = 1`, `TP = 224` across 450 test images. *(You can also embed your confusion matrix image here.)*
+- **Test Set Confusion Matrix (After Training):** `TN = 225`, `FP = 0`, `FN = 1`, `TP = 224` across 450 test images. 
 - **What Changed and Why:** Before fine-tuning, the model performed near random/majority-class guessing (`50.00%` accuracy and `0.7386` loss) because the new classification head was untrained on crack features. After 4 epochs of fine-tuning on the training set, loss dropped to `0.0098` and accuracy reached `99.78%` (`449/450` correct) as the network adapted its representations to wall and road surface cracks.
 - **Limitations:** Image-level classification only (no bounding boxes or pixel segmentation), SHA-256 removes identical files rather than visually similar crops, and real-world field images with harsh lighting, shadows, or motion blur may behave differently.
 
