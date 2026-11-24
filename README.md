@@ -17,14 +17,13 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 - **Data Sampling & Deduplication:** From the full dataset of `40,000` images in `arunrk7/surface-crack-detection` (https://www.kaggle.com/datasets/arunrk7/surface-crack-detection), a balanced subset of `3,000` unique images (`1,500` Negative and `1,500` Positive) is randomly sampled using `SEED = 42` while skipping exact file duplicates via SHA-256 content hashing (`10` exact duplicates skipped during sampling).
 - **Data Split:** The `3,000` selected images are split into `2,100` train (`70%`; `1,050` per class), `450` validation (`15%`; `225` per class), and `450` test (`15%`; `225` per class), accompanied by exact cross-split duplicate verification, split integrity checks, and a sample image grid (`2x4`) generated in `project.ipynb`.
 
-### Before vs. After Training (Test Set — 450 Images)
 | Metric | Before Training | After Training |
-| :--- | :---: | :---: |
-| **Loss** | `[Before Loss]` | `[After Loss]` |
-| **Accuracy** | `[Before Acc%]` (`[Before Acc]`) | `[After Acc%]` (`[After Acc]`) |
-| **Precision** | `[Before Precision]` | `[After Precision]` |
-| **Recall** | `[Before Recall]` | `[After Recall]` |
-| **F1-Score** | `[Before F1]` | `[After F1]` |
+| :--- | :--- | :--- |
+| Loss | 0.7386 | 0.0098 |
+| Accuracy | 50.00% (0.5000) | 99.78% (0.9978) |
+| Precision | 50.00% (0.5000) | 100.00% (1.0000) |
+| Recall | 100.00% (1.0000) | 99.56% (0.9956) |
+| F1-Score | 0.6667 | 0.9978 |
 
 ![Final Analysis](final_analysis.png)
 
