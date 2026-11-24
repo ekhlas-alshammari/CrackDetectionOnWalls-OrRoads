@@ -7,7 +7,9 @@ This project classifies surface cracks (`crack` vs. `no crack`) on walls and roa
 - **Project Type:** Team capstone project
 - **Domain:** Surface crack classification on walls and roads (`crack` / `no crack`)
 - **Model:** Fine-tuned `ResNet-18` (PyTorch)
+  
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ekhlas-alshammari/CrackDetectionOnWalls-OrRoads/blob/main/project.ipynb)
+
 ## Final Analysis
 
 ### Model & Training Setup
