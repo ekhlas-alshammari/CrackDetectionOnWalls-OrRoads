@@ -6,6 +6,8 @@ This project classifies surface cracks (crack vs. no crack) on walls and roads f
 - **Developers:** Ekhlas Alshammari, Roa Alnazawi
 - **Project Type:** Team capstone project (SDAIA Academy — Computer Vision, November 2026)
 - **Domain:** Surface crack classification on walls and roads (`Negative` / No Crack vs. `Positive` / Crack)
+- 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ekhlas-alshammari/CrackDetectionOnWalls-OrRoads/blob/main/project.ipynb)
 
 ## Dataset
 - **Source:** `arunrk7/surface-crack-detection` on Kaggle — https://www.kaggle.com/datasets/arunrk7/surface-crack-detection (40,000 total images across two classes: `Negative` and `Positive`).
@@ -21,9 +23,9 @@ This project classifies surface cracks (crack vs. no crack) on walls and roads f
 
 ## Results
 ### Training & Validation Curves
-*(Add your training/validation loss and accuracy per epoch plot image here, e.g., `![Training Curves](path/to/curves.png)`)*
+![Training and Evaluation Dashboard](dashboard.png)
 
-The training and validation loss and accuracy curves across the 4 epochs show steady learning and convergence without notable overfitting. *(Adjust this sentence if your exact epoch curves show something different.)*
+The training and validation loss and accuracy curves across the 4 epochs show steady learning and convergence without notable overfitting.
 
 ### Before vs. After Training (Test Set — 450 Images)
 | Metric | Before Training | After Training |
@@ -33,6 +35,8 @@ The training and validation loss and accuracy curves across the 4 epochs show st
 | **Precision** | `50.00%` (`0.5000`) | `100.00%` (`1.0000`) |
 | **Recall** | `100.00%` (`1.0000`) | `99.56%` (`0.9956`) |
 | **F1-Score** | `0.6667` | `0.9978` |
+
+![Final Analysis](final_analysis.png)
 
 ### Confusion Matrix & Summary of Change
 - **Test Set Confusion Matrix (After Training):** `TN = 225`, `FP = 0`, `FN = 1`, `TP = 224` across 450 test images. *(You can also embed your confusion matrix image here.)*
@@ -44,3 +48,8 @@ The training and validation loss and accuracy curves across the 4 epochs show st
 2. Set the runtime to GPU (`Runtime -> Change runtime type -> T4 GPU`).
 3. If prompted for Kaggle credentials, add `KAGGLE_USERNAME` and `KAGGLE_KEY` in Colab Secrets.
 4. Run all cells in order from top to bottom to reproduce the dataset sampling, splits, training, evaluation metrics, and plots.
+
+## Training-program attribution
+This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space as a 3-day program. Session: November 2026.
+
+Training-program reference: [SDAIA Academy on GitHub](https://github.com/SDAIAAcademy).
