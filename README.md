@@ -46,8 +46,7 @@ The training and validation loss and accuracy curves across the 4 epochs show st
 ## How to Run
 1. Open `project.ipynb` in Google Colab.
 2. Set the runtime to GPU (`Runtime -> Change runtime type -> T4 GPU`).
-3. If prompted for Kaggle credentials, add `KAGGLE_USERNAME` and `KAGGLE_KEY` in Colab Secrets.
-4. Run all cells in order from top to bottom to reproduce the dataset sampling, splits, training, evaluation metrics, and plots.
+3. Run all cells in order from top to bottom to reproduce the dataset sampling, splits, training, evaluation metrics, and plots.
 
 ## Training-program attribution
 This project was completed for the Computer Vision capstone using `ResNet-18` for wall and road surface crack classification, delivered by SDAIA Academy via Learning Space as a 3-day program. Session: November 2026.
